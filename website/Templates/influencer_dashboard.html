@@ -1,0 +1,57 @@
+{% extends 'base.html'%}
+{% block title %}
+    Influencer Dashboard
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="card bg-dark text-white">
+                <div class="card-header">
+                    User Details
+                </div>
+                <div class="card-body">
+                    <p><strong>Username:</strong> {{ current_user.username }}</p>
+                    <p><strong>Role:</strong> {{ current_user.role }}</p>
+                    <p><strong>Name:</strong> {{ current_influencer.name }}</p>
+                    <p><strong>Category:</strong> {{ current_influencer.category }}</p>
+                    <p><strong>Niche:</strong> {{ current_influencer.niche }}</p>
+                    <p><strong>Reach:</strong> {{ current_influencer.reach }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9">
+            <h1 class="mb-4">Influencer Dashboard</h1>
+
+            <!-- Ad Requests Section -->
+            <h2>Your Ad Requests</h2>
+            <table class="table table-striped bg-dark text-white">
+                <thead>
+                    <tr>
+                        <th>Campaign</th>
+                        <th>Payment Amount</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for request in ad_requests %}
+                    <tr>
+                        <td>{{ request.campaign.name }}</td>
+                        <td>${{ request.payment_amount }}</td>
+                        <td>{{ request.status }}</td>
+                        <td>
+                            <a href="{{ url_for('view_ad_request', request_id=request.id) }}" class="btn btn-sm btn-info">View</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

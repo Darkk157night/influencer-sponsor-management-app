@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}
+    {{ campaign.title }}
+{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card bg-dark text-white">
+                <div class="card-header">
+                    <h4>{{ campaign.title }}</h4>
+                </div>
+                <div class="card-body">
+                    <p><strong>Sponsor:</strong> {{ campaign.sponsor.name }}</p>
+                    <p><strong>Description:</strong> {{ campaign.description }}</p>
+                    <p><strong>Status:</strong> {{ campaign.status }}</p>
+                    <p><strong>Start Date:</strong> {{ campaign.start_date }}</p>
+                    <p><strong>End Date:</strong> {{ campaign.end_date }}</p>
+                    <p><strong>Visibility:</strong> {{ campaign.visibility }}</p>
+                    
+                    <div class="mt-4">
+                        <a href="{{ url_for('update_campaign', campaign_id=campaign.id) }}" class="btn btn-warning">Edit</a>
+                        <form action="{{ url_for('delete_campaign', campaign_id=campaign.id) }}" method="POST" class="d-inline-block" onsubmit="return confirm('Are you sure you want to delete this campaign?');">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html'%}
+{% block title %}
+    Influencer list
+{% endblock %}
+    
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-9">
+            <h2 class="mb-4">Influencers</h2>
+            
+            <!-- Search Form -->
+            <form action="{{ url_for('influencer_list') }}" method="GET" class="mb-4">
+                <div class="row g-3">
+                    <div class="col-sm-6 col-md-3">
+                        <input type="text" class="form-control" name="name" placeholder="Name" value="{{ request.args.get('name', '') }}">
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <input type="text" class="form-control" name="category" placeholder="Category" value="{{ request.args.get('category', '') }}">
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <input type="text" class="form-control" name="niche" placeholder="Niche" value="{{ request.args.get('niche', '') }}">
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <input type="number" class="form-control" name="min_reach" placeholder="Min Reach" value="{{ request.args.get('min_reach', '') }}">
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                        <a href="{{ url_for('influencer_list') }}" class="btn btn-secondary">Clear</a>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Influencer Cards -->
+            <div class="row">
+                {% for item in influencers %}
+                <div class="col-lg-6 mb-4">
+                    <div class="card bg-dark">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <h4 class="card-title">{{ item.name }}</h4>
+                                <a href="#" class="btn btn-primary btn-sm">Ad Request</a>
+                            </div>
+                            <p class="card-text"><strong>Email:</strong> {{ item.email_id }}</p>
+                            <p class="card-text"><strong>Category:</strong> {{ item.category }}</p>
+                            <p class="card-text"><strong>Niche:</strong> {{ item.niche }}</p>
+                            <p class="card-text"><strong>Reach:</strong> {{ item.reach }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

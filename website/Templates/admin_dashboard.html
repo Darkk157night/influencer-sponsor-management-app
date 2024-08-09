@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% block title %}
+    Admin Dashboard
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="card bg-dark text-white">
+                <div class="card-header">
+                    User Details
+                </div>
+                <div class="card-body">
+                    <p><strong>Username:</strong> {{ current_user.username }}</p>
+                    <p><strong>Role:</strong> {{ current_user.role }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="col-md-9">
+            <h1 class="mb-4">Admin Dashboard</h1>
+
+            <!-- Campaigns Section -->
+            <h2>Campaigns</h2>
+            <table class="table table-striped bg-dark text-white">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Sponsor</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for campaign in campaigns %}
+                    <tr>
+                        <td>{{ campaign.name }}</td>
+                        <td>{{ campaign.sponsor.name }}</td>
+                        <td>{{ campaign.start_date.strftime('%Y-%m-%d') }}</td>
+                        <td>{{ campaign.end_date.strftime('%Y-%m-%d') }}</td>
+                        <td>{{ campaign.status }}</td>
+                        <td>
+                            <a href="{{ url_for('admin_view_campaign', campaign_id=campaign.id) }}" class="btn btn-sm btn-info">View</a>
+                            <a href="{{ url_for('show_flag_form', campaign_id=campaign.id) }}" class="btn btn-sm btn-warning">Flag</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Ad Requests Section -->
+            <h2 class="mt-5">Ad Requests</h2>
+            <table class="table table-striped bg-dark text-white">
+                <thead>
+                    <tr>
+                        <th>Campaign</th>
+                        <th>Influencer</th>
+                        <th>Payment Amount</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for request in ad_requests %}
+                    <tr>
+                        <td>{{ request.campaign.name }}</td>
+                        <td>{{ request.influencer.name }}</td>
+                        <td>${{ request.payment_amount }}</td>
+                        <td>{{ request.status }}</td>
+                        <td>
+                            <a href="{{ url_for('admin_view_ad_request', request_id=request.id) }}" class="btn btn-sm btn-info">View</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Admin Flags Section -->
+            <h2 class="mt-5">Admin Flags</h2>
+            <table class="table table-striped bg-dark text-white">
+                <thead>
+                    <tr>
+                        <th>Admin</th>
+                        <th>Campaign</th>
+                        <th>Reason</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for flag in admin_flags %}
+                    <tr>
+                        <td>{{ flag.user.username }}</td>
+                        <td>{{ flag.campaign_id }}</td>
+                        <td>{{ flag.reason }}</td>
+                        <td>
+                            <a href="{{ url_for('admin_view_flag', flag_id=flag.id) }}" class="btn btn-sm btn-info">View</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $('#flagModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var campaignId = button.data('campaign-id'); // Extract info from data-* attributes
+        var modal = $(this);
+        modal.find('#flagCampaignId').val(campaignId); // Set the campaign ID in the hidden input field
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}
+    Ad Request Details
+{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card bg-dark text-white">
+                <div class="card-header">
+                    <h4>Ad Request Details</h4>
+                </div>
+                <div class="card-body">
+                    <p><strong>Campaign:</strong> {{ ad_request.campaign.title }}</p>
+                    <p><strong>Influencer:</strong> {{ ad_request.influencer.name }}</p>
+                    <p><strong>Email:</strong> {{ ad_request.influencer.email }}</p>
+                    <p><strong>Payment Amount:</strong> ${{ ad_request.payment_amount }}</p>
+                    <p><strong>Status:</strong> {{ ad_request.status }}</p>
+                    <p><strong>Requested On:</strong> {{ ad_request.created_at }}</p>
+                    
+                    <div class="mt-4">
+                        <a href="{{ url_for('approve_ad_request', request_id=ad_request.id) }}" class="btn btn-success">Approve</a>
+                        <a href="{{ url_for('decline_ad_request', request_id=ad_request.id) }}" class="btn btn-danger">Decline</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

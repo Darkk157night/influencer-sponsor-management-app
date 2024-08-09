@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Flag Campaign
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Flag Campaign</h1>
+    <div class="card bg-dark text-white">
+        <div class="card-header">
+            Flag Campaign: {{ campaign.name }}
+        </div>
+        <div class="card-body">
+            <form action="{{ url_for('admin_flag_campaign') }}" method="POST">
+                <input type="hidden" name="campaign_id" value="{{ campaign.id }}">
+                <div class="form-group">
+                    <label for="flagReason">Reason for flagging:</label>
+                    <textarea class="form-control" id="flagReason" name="reason" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-warning">Submit</button>
+                <a href="{{ url_for('website_page_admin') }}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

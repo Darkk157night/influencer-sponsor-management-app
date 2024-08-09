@@ -1,0 +1,55 @@
+{% extends 'base.html'%}
+{% block title %}
+    Influencer list
+{% endblock %}
+    
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-9">
+            <h2 class="mb-4">Campaigns</h2>
+             
+            <!-- Search Form -->
+            <form action="{{ url_for('campaigns_page') }}" method="GET" class="mb-4">
+                <div class="row g-3">
+                    <div class="col-sm-6 col-md-3">
+                        <input type="text" class="form-control" name="title" placeholder="Title" value="{{ request.args.get('title', '') }}">
+                    </div>
+                    
+                    <div class="col-sm-6 col-md-3">
+                        <input type="text" class="form-control" name="category" placeholder="Category" value="{{ request.args.get('category', '') }}">
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <input type="text" class="form-control" name="niche" placeholder="Niche" value="{{ request.args.get('niche', '') }}">
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                        <a href="{{ url_for('campaigns_page') }}" class="btn btn-secondary">Clear</a>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Campaign Cards -->
+            <div class="row">
+                {% for campaign in campaigns %}
+                <div class="col-lg-6 mb-4">
+                    <div class="card bg-dark text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <h4 class="card-title">{{ campaign.name }}</h4>
+                                <a href="{{ url_for('new_ad_request',campaign_id=campaign.id) }}" class="btn btn-primary btn-sm">View Details</a>
+                            </div>
+                            <p class="card-text"><strong>Company:</strong></p>
+                            <p class="card-text"><strong>Description:</strong> {{ campaign.description }}</p>
+                            <p class="card-text"><strong>Status:</strong> {{ campaign.status }}</p>
+                            <p class="card-text"><strong>Start Date:</strong> {{ campaign.start_date }}</p>
+                            <p class="card-text"><strong>End Date:</strong> {{ campaign.end_date }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

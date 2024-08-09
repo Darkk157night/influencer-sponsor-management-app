@@ -1,0 +1,50 @@
+{% extends 'base.html'%}
+{% block title %}
+    Create campaign
+{% endblock %}
+
+{% block content %}
+<body class="text-center">
+    <div class="container">
+        <form method="POST" class="form-signin" style="color:white">
+            {{ form.hidden_tag() }}
+            <h1 class="h3 mb-3 font-weight-normal">
+                Create Campaign
+            </h1>
+            <br>
+                {{form.name.label()}}
+                {{ form.name(class="form-control", placeholder="Enter title") }}
+
+                {{form.description.label()}}
+                {{ form.description(class="form-control", placeholder="Enter Description") }}
+
+                {{form.start_date.label()}}
+                {{ form.start_date(class="form-control", placeholder="Enter date") }}
+
+                {{form.end_date.label()}}
+                {{ form.end_date(class="form-control", placeholder="Enter date") }}
+
+                {{form.budget.label()}}
+                {{ form.budget(class="form-control", placeholder="Enter budget") }}
+                
+                {{form.category.label()}}
+                {{ form.category(class="form-control", placeholder="Enter your category") }}
+
+                {{form.niche.label()}}
+                {{ form.niche(class="form-control", placeholder="Enter your niche") }}
+
+                {{form.goals.label()}}
+                {{ form.goals(class="form-control", placeholder="Enter goals") }}
+
+                {{form.visibility.label()}}
+                {{ form.visibility(class="form-control", placeholder="select visibility") }}
+            <br>
+
+
+   
+            {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
+
+        </form>
+    </div>
+</body>
+{% endblock%}
