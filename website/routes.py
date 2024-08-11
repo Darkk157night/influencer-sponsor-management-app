@@ -243,15 +243,15 @@ def new_ad_request(campaign_id):
         db.session.add(ad_request)
         db.session.commit()
         flash('Ad Request created successfully', 'success')
-        return redirect(url_for('website_page_influencer'))  # Replace 'some_view' with the name of the view to redirect to
+        return redirect(url_for('website_page_influencer')) 
     return render_template('ad_request_form.html', form=form)
 
 @app.route('/Dashboard/Influencer/Campaigns-page',methods=['POST','GET'])
 @login_required
 def campaigns_page():
     title = request.args.get('title', '')
-    category = request.args.get('category', '')  # Ensure your Campaign model has a 'category' field if using it
-    niche = request.args.get('niche', '')        # Ensure your Campaign model has a 'niche' field if using it
+    category = request.args.get('category', '')  
+    niche = request.args.get('niche', '')       
 
     # Build the query
     query = Campaign.query.filter_by(visibility='Public', status='ongoing')
@@ -263,7 +263,7 @@ def campaigns_page():
     if niche:
         query = query.filter(Campaign.niche.ilike(f'%{niche}%'))
     
-    # Execute query and get results
+   
     campaigns = query.all()
     
     return render_template('campaigns_listing.html', campaigns=campaigns)
